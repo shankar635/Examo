@@ -39,7 +39,8 @@ namespace Examo.Repository
             // TODO: Need to make it soft delete.
             var student = _dbContext.Students.FirstOrDefault(x => x.id == id);
             if (student == null) return;
-            _dbContext.Entry(student).State = EntityState.Deleted;
+            student.IsActive = false;
+            _dbContext.Entry(student).State = EntityState.Modified;
             _dbContext.SaveChanges();
         }
     }
