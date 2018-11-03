@@ -1,5 +1,5 @@
 using System;
-
+using Examo.Repository;
 using Unity;
 
 namespace Examo
@@ -34,14 +34,12 @@ namespace Examo
         /// allows resolving a concrete type even if it was not previously
         /// registered.
         /// </remarks>
-        public static void RegisterTypes(IUnityContainer container)
-        {
+        public static void RegisterTypes(IUnityContainer container) =>
             // NOTE: To load from web.config uncomment the line below.
             // Make sure to add a Unity.Configuration to the using statements.
             // container.LoadConfiguration();
 
             // TODO: Register your type's mappings here.
-            // container.RegisterType<IProductRepository, ProductRepository>();
-        }
+            container.RegisterType<IStudentRepository, StudentRepository>();
     }
 }
