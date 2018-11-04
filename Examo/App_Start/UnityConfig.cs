@@ -1,6 +1,11 @@
 using System;
+using System.Web.Mvc;
+using Examo.Models;
 using Examo.Repository;
+using Examo.Service;
 using Unity;
+using Unity.AspNet.Mvc;
+using Unity.Injection;
 
 namespace Examo
 {
@@ -34,12 +39,21 @@ namespace Examo
         /// allows resolving a concrete type even if it was not previously
         /// registered.
         /// </remarks>
-        public static void RegisterTypes(IUnityContainer container) =>
+        public static void RegisterTypes(IUnityContainer container)
+        {
             // NOTE: To load from web.config uncomment the line below.
             // Make sure to add a Unity.Configuration to the using statements.
             // container.LoadConfiguration();
-
+            container.RegisterType<Models.ExamoDbContext>(
+                new InjectionFactory(c => new ExamoDbContext()));
             // TODO: Register your type's mappings here.
+            // Repository Pattern Registration
             container.RegisterType<IStudentRepository, StudentRepository>();
+
+            // Service Layer Registration.
+
+            container.RegisterType<IStudentService, StudentService>();
+            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+        }
     }
 }

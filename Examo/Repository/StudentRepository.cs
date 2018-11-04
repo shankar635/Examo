@@ -28,15 +28,14 @@ namespace Examo.Repository
             return student.PublicId;
         }
 
-        public Student GetProfileByGuid(Guid id)=> _dbContext.Students.FirstOrDefault(x => x.PublicId == id);
+        public Student GetProfileByGuid(Guid id)=> _dbContext.Students.FirstOrDefault(x => x.PublicId == id && x.IsActive == true);
 
-        public Student GetProfileById(int id)=> _dbContext.Students.FirstOrDefault(x => x.id == id);
+        public Student GetProfileById(int id)=> _dbContext.Students.FirstOrDefault(x => x.id == id && x.IsActive == true);
 
         public List<Student> GetStudents() => _dbContext.Students.ToList();
 
         public void DeleteStudent(int id)
         {
-            // TODO: Need to make it soft delete.
             var student = _dbContext.Students.FirstOrDefault(x => x.id == id);
             if (student == null) return;
             student.IsActive = false;
